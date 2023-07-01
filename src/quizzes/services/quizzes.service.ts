@@ -14,7 +14,12 @@ export class QuizzesService {
   ) {}
 
   getQuizById(quizId: number) {
-    return 'xxx';
+    return this.quizzesRepository
+      .createQueryBuilder('quizesTable')
+      .leftJoinAndSelect('quizesTable.questions', 'questionsTable')
+      .leftJoinAndSelect('questionsTable.options', 'optionsTable')
+      .where('quizesTable.id = :quizId', { quizId })
+      .getOne();
   }
 
   async saveQuiz(quizDto: CreateQuizDto) {
