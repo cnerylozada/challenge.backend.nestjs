@@ -12,8 +12,6 @@ export class QuizzesService {
     @InjectRepository(Quiz) private quizzesRepository: Repository<Quiz>,
     @InjectRepository(Question)
     private questionsRepository: Repository<Question>,
-    @InjectRepository(Option)
-    private optionsRepository: Repository<Option>,
   ) {}
 
   getQuizById(quizId: number) {
@@ -27,11 +25,19 @@ export class QuizzesService {
 
   async saveQuiz(quizDto: CreateQuizDto) {
     const questions: Question[] = [];
-    quizDto.questions.forEach((_) => {
+    quizDto.questions.forEach((question) => {
       const newQuestion = new Question();
-      newQuestion.text = _.text;
-      newQuestion.imageUrl = _.imageUrl;
-      newQuestion.lifetimeSeconds = _.lifetimeSeconds;
+      newQuestion.text = question.text;
+      newQuestion.imageUrl = question.imageUrl;
+      newQuestion.lifetimeSeconds = question.lifetimeSeconds;
+
+      const options: Option[] = [];
+      question.options.forEach((option) => {
+        const newOption = new Option();
+        newOption.text = option.text;
+        options.push(newOption);
+      });
+      newQuestion.options = options;
       questions.push(newQuestion);
     });
     await this.questionsRepository.save(questions);
