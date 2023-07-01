@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { QuizzesService } from 'src/quizzes/services/quizzes.service';
+import { CreateQuizDto } from 'src/quizzes/dto/Quiz';
 
 @Controller('quizzes')
 export class QuizzesController {
@@ -8,5 +9,10 @@ export class QuizzesController {
   @Get(':quizId')
   getQuizById(@Param('quizId') quizId: number) {
     return this.quizzesService.getQuizById(quizId);
+  }
+
+  @Post()
+  saveQuiz(@Body() quiz: CreateQuizDto) {
+    return this.quizzesService.saveQuiz(quiz);
   }
 }
