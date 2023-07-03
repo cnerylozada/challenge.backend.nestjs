@@ -23,6 +23,11 @@ export class QuizzesService {
       .getOne();
   }
 
+  async getAvailableQuizzes() {
+    const allQuizzess = await this.quizzesRepository.find();
+    return allQuizzess.map((_) => _.id);
+  }
+
   async saveQuiz(quizDto: CreateQuizDto) {
     const questions: Question[] = [];
     quizDto.questions.forEach((question) => {

@@ -6,6 +6,11 @@ import { CreateQuizDto } from 'src/quizzes/dto/Quiz';
 export class QuizzesController {
   constructor(private quizzesService: QuizzesService) {}
 
+  @Get('/available-quizzes')
+  getAvailableQuizzes() {
+    return this.quizzesService.getAvailableQuizzes();
+  }
+
   @Get(':quizId')
   getQuizById(@Param('quizId') quizId: number) {
     return this.quizzesService.getQuizById(quizId);
