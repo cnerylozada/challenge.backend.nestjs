@@ -2,16 +2,16 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { QuizzesController } from './controllers/quizzes.controller';
 import { QuizzesService } from './services/quizzes.service';
-import { AddressesService } from './services/addresses.service';
+import { UsersService } from './services/addresses.service';
 import { Quiz } from './entities/quiz.entity';
 import { Question } from './entities/question.entity';
 import { Option } from './entities/option.entity';
-import { Address } from './entities/address.entity';
-import { AddressesController } from './controllers/addresses.controller';
+import { User } from './entities/user.entity';
+import { UsersController } from './controllers/users.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Quiz, Question, Option, Address])],
-  controllers: [QuizzesController, AddressesController],
-  providers: [QuizzesService, AddressesService],
+  imports: [TypeOrmModule.forFeature([Quiz, Question, Option, User])],
+  controllers: [QuizzesController, UsersController],
+  providers: [QuizzesService, UsersService],
 })
 export class QuizzesModule {}

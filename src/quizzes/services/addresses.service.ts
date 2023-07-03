@@ -1,30 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Address } from '../entities/address.entity';
-import { CreateAddressDto } from '../dto/Address';
+import { User } from '../entities/user.entity';
+import { CreateUserDto } from '../dto/User';
 
 @Injectable()
-export class AddressesService {
+export class UsersService {
   constructor(
-    @InjectRepository(Address) private addressesRepository: Repository<Address>,
+    @InjectRepository(User) private usersRepository: Repository<User>,
   ) {}
 
-  async getDataByAddress(address: string) {
-    return this.addressesRepository.findOne({
+  async getUserDataByAddress(address: string) {
+    return this.usersRepository.findOne({
       where: { address },
     });
   }
 
-  async saveAddreess(addressDto: CreateAddressDto) {
-    return this.addressesRepository.save(addressDto);
+  async saveUserData(userDto: CreateUserDto) {
+    return this.usersRepository.save(userDto);
   }
 
-  async updateAddress(addressId: number) {
-    const address = await this.addressesRepository.findOne({
-      where: { id: addressId },
+  async updateUserData(userId: number) {
+    const userData = await this.usersRepository.findOne({
+      where: { id: userId },
     });
-    address.lastTime = new Date().toISOString();
-    return this.addressesRepository.save(address);
+    userData.lastTime = new Date().toISOString();
+    return this.usersRepository.save(userData);
   }
 }
