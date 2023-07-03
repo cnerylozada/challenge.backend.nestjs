@@ -8,6 +8,6 @@ export class Address {
   @Column({ type: 'varchar' })
   address: string;
 
-  @Column({ type: 'integer' })
-  lastTime: number;
+  @Column({ type: 'varchar' })
+  lastTime: string;
 }

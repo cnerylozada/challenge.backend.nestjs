@@ -1,9 +1,9 @@
-import { IsString, IsNumber } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class CreateAddressDto {
   @IsString()
   address: string;
 
-  @IsNumber()
-  lastTime: number;
+  @IsString()
+  lastTime: string;
 }
