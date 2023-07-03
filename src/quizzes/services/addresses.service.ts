@@ -10,29 +10,21 @@ export class AddressesService {
     @InjectRepository(Address) private addressesRepository: Repository<Address>,
   ) {}
 
-  async canSubmitAnswers(addressToCheck: string) {
-    try {
-      const address = await this.addressesRepository.findOne({
-        where: { address: addressToCheck },
-      });
-      const timeNow = Date.now();
-      const lastTime = new Date(address.lastTime).getTime();
-      const elapsedMinutes = (timeNow - lastTime) / (1000 * 60);
-      let result = false;
-      if (elapsedMinutes > 5) {
-        await this.addressesRepository.save({
-          id: address.id,
-          address: address.address,
-          lastTime: new Date().toISOString(),
-        });
-        result = true;
-      } else result = false;
-      return result;
-    } catch (error) {
-      return false;
-    }
+  async getDataByAddress(address: string) {
+    return this.addressesRepository.findOne({
+      where: { address },
+    });
   }
+
   async saveAddreess(addressDto: CreateAddressDto) {
     return this.addressesRepository.save(addressDto);
+  }
+
+  async updateAddress(addressId: number) {
+    const address = await this.addressesRepository.findOne({
+      where: { id: addressId },
+    });
+    address.lastTime = new Date().toISOString();
+    return this.addressesRepository.save(address);
   }
 }

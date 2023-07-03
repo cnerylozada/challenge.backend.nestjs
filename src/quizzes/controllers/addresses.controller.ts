@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { AddressesService } from '../services/addresses.service';
 import { CreateAddressDto } from '../dto/Address';
 
@@ -8,11 +8,16 @@ export class AddressesController {
 
   @Get(':address')
   canSubmitAnswers(@Param('address') address: string) {
-    return this.addressesService.canSubmitAnswers(address);
+    return this.addressesService.getDataByAddress(address);
   }
 
   @Post()
   saveQuiz(@Body() address: CreateAddressDto) {
     return this.addressesService.saveAddreess(address);
+  }
+
+  @Put(':addressId')
+  updateQuestion(@Param('addressId') addressId: number) {
+    return this.addressesService.updateAddress(addressId);
   }
 }
